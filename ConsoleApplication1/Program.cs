@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
@@ -23,7 +26,7 @@ namespace ConsoleApplication1
 
       //File.SetCreationTime("C:\\Users\\ryan7423\\Pictures\\ryan\\temp\\20151206_170331.jpg", date);
 
-      var dirPath = "f:\\Download";
+      var dirPath = "f:\\";
       Directory.SetCurrentDirectory(dirPath);
 
       var dirInfo = new DirectoryInfo(dirPath);
@@ -122,14 +125,17 @@ namespace ConsoleApplication1
           try
           {
             if (file.CreationTime != date)
+            {
               file.CreationTime = date;
+              file.LastWriteTime = date;
+            }
           }
           catch (Exception e)
           {
             sb.AppendLine(file.FullName + "; " + e.Message);
           }
         }
-        else
+        else if (file.CreationTime.Year == DateTime.Now.Year)
         {
           try
           {
